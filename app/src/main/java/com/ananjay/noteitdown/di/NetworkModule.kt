@@ -1,6 +1,7 @@
 package com.ananjay.noteitdown.di
 
 import com.ananjay.noteitdown.api.UserApi
+import com.ananjay.noteitdown.utils.AppConstants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ class NetworkModule {
     fun getRetrofit(): Retrofit{
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("")
+            .baseUrl(BASE_URL)
             .build()
     }
 
