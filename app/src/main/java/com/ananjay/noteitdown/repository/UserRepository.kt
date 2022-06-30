@@ -28,6 +28,7 @@ class UserRepository @Inject constructor(private val userAPI: UserApi){
     }
 
     suspend fun signInUser(userRequest: UserRequest){
+        _userResponseLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.signin(userRequest)
         Log.d(TAG, "loginUser: ${response.body().toString()}")
         handleResponse(response)
@@ -37,6 +38,7 @@ class UserRepository @Inject constructor(private val userAPI: UserApi){
         if(response.isSuccessful && response.body() != null){
             _userResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
         }else if(response.errorBody() != null){
+            //in case of error retrofit doesn't parse the error response to give error message, but it does in case of success. hence,
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
             _userResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         }else{
