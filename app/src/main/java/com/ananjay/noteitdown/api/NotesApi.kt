@@ -6,15 +6,15 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface NotesApi {
-    @GET("/note")
+    @GET("/notes")
     suspend fun getNotes() : Response<List<NoteResponse>>
 
-    @DELETE("/note/{noteId}")
+    @DELETE("/notes/{noteId}")
     suspend fun deleteNote(@Path("noteId") noteId: String) : Response<NoteResponse>
 
-    @PUT("/note/{noteId}")
+    @PUT("/notes/{noteId}")
     suspend fun updateNote(@Path("noteId") noteId: String,@Body noteRequest: NoteRequest) : Response<NoteResponse>
 
-    @POST("/note")
+    @POST("/notes")
     suspend fun createNote(@Body noteRequest: NoteRequest) : Response<NoteResponse>
 }
