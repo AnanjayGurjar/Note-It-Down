@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.ananjay.noteitdown.R
 import com.ananjay.noteitdown.databinding.FragmentLoginBinding
+import com.ananjay.noteitdown.databinding.FragmentRegisterBinding
 import com.ananjay.noteitdown.models.UserRequest
 import com.ananjay.noteitdown.utils.NetworkResult
 import com.ananjay.noteitdown.utils.TokenManager
@@ -23,7 +24,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private lateinit var binding : FragmentLoginBinding
+//    private lateinit var binding : FragmentLoginBinding
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+
     private val authViewModel by viewModels<AuthViewModel>()
 
     @Inject
@@ -34,7 +38,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -100,5 +104,10 @@ class LoginFragment : Fragment() {
             progressBar.visibility = View.GONE
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

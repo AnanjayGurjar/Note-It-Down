@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.ananjay.noteitdown.R
+import com.ananjay.noteitdown.databinding.FragmentHomeBinding
 import com.ananjay.noteitdown.databinding.FragmentRegisterBinding
 import com.ananjay.noteitdown.models.UserRequest
 import com.ananjay.noteitdown.utils.NetworkResult
@@ -24,7 +25,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
-    private lateinit var binding: FragmentRegisterBinding
+//    private lateinit var binding: FragmentRegisterBinding
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
+
     private val authViewModel by viewModels<AuthViewModel>()
 
     @Inject
@@ -35,7 +39,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         if(tokenManager.getToken() != null){
             findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
         }
@@ -104,6 +108,11 @@ class RegisterFragment : Fragment() {
             progressBar.visibility = View.GONE
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 
