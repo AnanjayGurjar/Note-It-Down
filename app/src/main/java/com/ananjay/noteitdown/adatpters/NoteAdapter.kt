@@ -9,14 +9,16 @@ import com.ananjay.noteitdown.adatpters.NoteAdapter.*
 import com.ananjay.noteitdown.databinding.NoteItemBinding
 import com.ananjay.noteitdown.models.NoteResponse
 
-class NoteAdapter(): ListAdapter<NoteResponse, NoteViewHolder>(ComparatorDiffUtil()) {
+class NoteAdapter(private val noteClicked: (NoteResponse) -> Unit) : ListAdapter<NoteResponse, NoteViewHolder>(ComparatorDiffUtil()) {
 
     inner class NoteViewHolder(private val binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(note: NoteResponse){
             binding.tvNoteTitle.text = note.title
             binding.tvNoteDescription.text = note.description
-
+            binding.root.setOnClickListener {
+                noteClicked(note)
+            }
         }
     }
 
